@@ -1,14 +1,17 @@
-import Chat from "./Chat";
-import Message from "./Message";
-import Preview from "./Preview";
+import { Routes, Route } from "react-router-dom";
+
+import Errorpage from "./Errorpage";
+import Home from "./Home";
+import Login from "./Login";
+import Register from "./Register";
 
 export default function App() {
-	const click = false;
 	return (
-		<div className="whatsapp-container">
-			<Chat />
-			{click && <Preview />}
-			{!click && <Message />}
-		</div>
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/signup" element={<Register />} />
+			<Route path="/:text" element={<Errorpage />} />
+		</Routes>
 	);
 }
