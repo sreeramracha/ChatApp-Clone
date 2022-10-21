@@ -12,6 +12,11 @@ code {
 		monospace;
 }
 
+* {
+	/* transition-timing-function: ease-in;
+	transition-duration: 0.5s; */
+}
+
 /* ---------------------  */
 
 /* Common Tags */
@@ -77,6 +82,37 @@ p {
 
 .icons-section {
 	margin: auto 5px;
+	position: relative;
+}
+
+.menu-options {
+	position: absolute;
+	z-index: 5;
+	right: 0;
+	background-color: #222e35;
+	color: rgb(184, 184, 184);
+}
+
+.menu-list {
+	padding: 13px 30px;
+}
+
+.menu-list:hover {
+	background-color: #111b21;
+	cursor: pointer;
+}
+
+.menu-list > button {
+	background-color: transparent;
+	color: rgb(184, 184, 184);
+	border: 0;
+	font-size: 17px;
+	cursor: pointer;
+}
+
+.more {
+	background-color: rgb(91, 91, 91);
+	border-radius: 20px;
 }
 
 /* Chat SearchBar Section */
@@ -319,7 +355,19 @@ p {
 	box-shadow: 5px 5px 15px rgb(110, 110, 110);
 }
 
-/*  */
+.incorrect-message > p {
+	color: red;
+}
+
+.fade-in {
+	transition: opacity 0.5s ease;
+}
+
+.fade-out {
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+
 .logins {
 	display: flex;
 	column-gap: 30px;
@@ -365,7 +413,7 @@ p {
 	height: 25px;
 	width: 90%;
 	padding: 5px 10px;
-	font-size: large;
+	font-size: small;
 	border: 1px solid #d3dcff;
 }
 
@@ -373,7 +421,14 @@ p {
 	border: 1px solid rgb(82, 82, 82);
 }
 
-.label-name,
+p.lable-username,
+p.lable-password,
+p.lable-email,
+p.lable-cpassword {
+	padding: auto 25px;
+}
+
+.label-username,
 .label-email,
 .label-password,
 .label-cpassword {
@@ -382,10 +437,10 @@ p {
 	left: 9px;
 	color: #313e44;
 	font-size: medium;
-	transition: all 0.25s ease;
+	transition: all 0.5s ease;
 }
 
-.lable-name,
+.lable-username,
 .lable-email,
 .lable-password,
 .lable-cpassword {
@@ -416,14 +471,16 @@ p {
 	background-color: #009172;
 }
 
-.signup-section > button {
+.register-page > button {
 	background-color: #e4e9fd;
 	border: 0;
 	border-radius: 10px;
 	color: #00a884;
+	font-size: medium;
+	padding: 10px;
 }
 
-.signup-section > button:hover {
+.register-page > button:hover {
 	cursor: pointer;
 	background-color: #d5ddff;
 }
@@ -435,6 +492,10 @@ p {
 
 .signup-section {
 	text-align: center;
+}
+
+.signup-section > p {
+	margin-bottom: 5px;
 }
 
 /* Register Section */

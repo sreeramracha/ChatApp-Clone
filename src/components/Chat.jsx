@@ -3,29 +3,36 @@ import MessageIcon from "@mui/icons-material/Message";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DonutLargeIcon from "@mui/icons-material/DonutLarge";
 import SearchIcon from "@mui/icons-material/Search";
+import { useState } from "react";
 
 export default function Chat(props) {
 	const date = new Date().toString();
 	const hour = date.slice(16, 18);
 	const minute = date.slice(19, 21);
-	console.log(date, hour, minute);
+	// console.log(date, hour, minute);
+
+	const [show, setShow] = useState(false);
+
+	function handleMenu() {
+		setShow(!show);
+	}
 
 	return (
 		<div className="chat-section">
 			<div className="chat-header">
 				<div className="display-picture">
-					<Avatar src="https://pps.whatsapp.net/v/t61.24694-24/287597374_781422333021474_6975959552606426129_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AVyr8-mh7PrmaCByw-NdYmJ5jXileBTFQ7uN0Z0gZ7gnnw&oe=6319EE5E" />
+					<Avatar src="https://pps.whatsapp.net/v/t61.24694-24/287597374_781422333021474_6975959552606426129_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdS1rjsym3ea3N4nu7OAGGcFoOwU2K_PvFUHRQkIy0Wf1A&oe=635E441E" />
 				</div>
 				<div className="menu">
 					<div className="icons-section">
-						<div className="icons">
+						<div className="icons donut">
 							<IconButton>
 								<DonutLargeIcon />
 							</IconButton>
 						</div>
 					</div>
 					<div className="icons-section">
-						<div className="icons">
+						<div className="icons message">
 							<IconButton>
 								<MessageIcon />
 							</IconButton>
@@ -33,11 +40,23 @@ export default function Chat(props) {
 					</div>
 
 					<div className="icons-section">
-						<div className="icons">
-							<IconButton>
+						<div className={show ? "icons more" : "icons"}>
+							<IconButton onClick={handleMenu}>
 								<MoreVertIcon />
 							</IconButton>
 						</div>
+						{show && (
+							<div className="menu-options">
+								<div className="menu-list">
+									<p>Settings</p>
+								</div>
+								<form action="/logout" method="GET">
+									<div className="menu-list">
+										<button>Logout</button>
+									</div>
+								</form>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
@@ -61,7 +80,7 @@ export default function Chat(props) {
 			<div className="chat-body">
 				<div className="chat-messages">
 					<div className="profile-picture">
-						<Avatar src="https://pps.whatsapp.net/v/t61.24694-24/287597374_781422333021474_6975959552606426129_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AVyr8-mh7PrmaCByw-NdYmJ5jXileBTFQ7uN0Z0gZ7gnnw&oe=6319EE5E" />
+						<Avatar src="https://pps.whatsapp.net/v/t61.24694-24/287597374_781422333021474_6975959552606426129_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdS1rjsym3ea3N4nu7OAGGcFoOwU2K_PvFUHRQkIy0Wf1A&oe=635E441E" />
 					</div>
 
 					<div className="chat-details">

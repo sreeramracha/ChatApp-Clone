@@ -41,7 +41,7 @@ export default function Message() {
 		<div className="message-section">
 			<div className="message-header">
 				<div className="message-profile-picture">
-					<Avatar src="https://pps.whatsapp.net/v/t61.24694-24/287597374_781422333021474_6975959552606426129_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AVyr8-mh7PrmaCByw-NdYmJ5jXileBTFQ7uN0Z0gZ7gnnw&oe=6319EE5E" />
+					<Avatar src="https://pps.whatsapp.net/v/t61.24694-24/287597374_781422333021474_6975959552606426129_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdS1rjsym3ea3N4nu7OAGGcFoOwU2K_PvFUHRQkIy0Wf1A&oe=635E441E" />
 					<p>Sreeram</p>
 				</div>
 
