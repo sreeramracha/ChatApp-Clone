@@ -40,6 +40,7 @@ export default function Home() {
 	}, []);
 
 	const click = false;
+
 	return (
 		<div>
 			<div className="whatsapp-container">
