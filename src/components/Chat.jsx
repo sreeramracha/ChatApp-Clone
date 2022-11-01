@@ -367,6 +367,7 @@ export default function Chat({ currentUser, handlePreview }) {
 				hour={hour}
 				minute={minute}
 				handlePreview={handlePreview}
+				currentUser={currentUser}
 			/>
 		</div>
 	);
