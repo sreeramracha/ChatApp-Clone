@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { FcGoogle } from "react-icons/fc";
-import { BsFacebook } from "react-icons/bs";
+// import { FcGoogle } from "react-icons/fc";
+// import { BsFacebook } from "react-icons/bs";
 import { loginRoute } from "../utils/APIRoutes";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -97,14 +97,14 @@ export default function Login() {
 		return true;
 	}
 
-	const reactFacebookIconStyle = {
-		color: "blue",
-		paddingRight: "10px",
-	};
+	// const reactFacebookIconStyle = {
+	// 	color: "blue",
+	// 	paddingRight: "10px",
+	// };
 
-	const reactGoogleIconStyle = {
-		paddingRight: "10px",
-	};
+	// const reactGoogleIconStyle = {
+	// 	paddingRight: "10px",
+	// };
 
 	return (
 		<>
@@ -166,7 +166,7 @@ export default function Login() {
 								</button>
 							</div>
 						</form>
-						<div className="login-social">
+						{/* <div className="login-social">
 							<div className="google-login">
 								<Link className="google" to="/auth/google">
 									<FcGoogle
@@ -185,7 +185,7 @@ export default function Login() {
 									Facebook
 								</Link>
 							</div>
-						</div>
+						</div> */}
 					</div>
 					<hr className="break"></hr>
 					<div className="signup-section">

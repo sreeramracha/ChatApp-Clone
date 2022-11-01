@@ -74,20 +74,24 @@ export default function Contacts({
 								<div className="chat-title">
 									<p>{item.username}</p>
 								</div>
-								{lastMessage && (
-									<div className="chat-time">
+								{lastMessage &&
+									item.username === currentChat.username && (
+										<div className="chat-time">
+											<p>
+												{lastMessage.time[0]}:
+												{lastMessage.time[1]}
+											</p>
+										</div>
+									)}
+							</div>
+							{lastMessage &&
+								item.username === currentChat.username && (
+									<div className="chat-info">
 										<p>
-											{lastMessage.time[0]}:
-											{lastMessage.time[1]}
+											{handleMessage(lastMessage.message)}
 										</p>
 									</div>
 								)}
-							</div>
-							{lastMessage && (
-								<div className="chat-info">
-									<p>{handleMessage(lastMessage.message)}</p>
-								</div>
-							)}
 						</div>
 					</div>
 				);

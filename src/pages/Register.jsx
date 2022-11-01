@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FcGoogle } from "react-icons/fc";
-import { BsFacebook } from "react-icons/bs";
+// import { FcGoogle } from "react-icons/fc";
+// import { BsFacebook } from "react-icons/bs";
 import { registerRoute } from "../utils/APIRoutes";
 
 export default function Register() {
@@ -113,14 +113,14 @@ export default function Register() {
 		return true;
 	};
 
-	const reactFacebookIconStyle = {
-		color: "blue",
-		paddingRight: "10px",
-	};
+	// const reactFacebookIconStyle = {
+	// 	color: "blue",
+	// 	paddingRight: "10px",
+	// };
 
-	const reactGoogleIconStyle = {
-		paddingRight: "10px",
-	};
+	// const reactGoogleIconStyle = {
+	// 	paddingRight: "10px",
+	// };
 
 	return (
 		<>
@@ -226,7 +226,7 @@ export default function Register() {
 							</div>
 						</form>
 
-						<div className="login-social">
+						{/* <div className="login-social">
 							<div className="google-login">
 								<Link className="google" to="/auth/google">
 									<FcGoogle
@@ -245,7 +245,7 @@ export default function Register() {
 									Facebook
 								</Link>
 							</div>
-						</div>
+						</div> */}
 					</div>
 					<hr className="break"></hr>
 					<div className="signup-section">

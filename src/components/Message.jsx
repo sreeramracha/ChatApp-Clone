@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import ScrollToBottom from "react-scroll-to-bottom";
 import { getAllMessagesRoute, sendingMessageRoute } from "../utils/APIRoutes";
 import Input from "./Input";
 import { v4 as uuidv4 } from "uuid";
@@ -10,6 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 export default function Message({ currentUser, currentChat, socket }) {
 	const [messages, setMessages] = useState([]);
 	const [arrivalMessage, setArrivalMessage] = useState(null);
+
+	const scrollRef = useRef();
 
 	async function handleSendMsg(msg) {
 		const date = new Date().toString();
@@ -83,6 +84,10 @@ export default function Message({ currentUser, currentChat, socket }) {
 		}
 	}, [currentChat, currentUser]);
 
+	useEffect(() => {
+		scrollRef.current?.scrollIntoView({ behaviour: "smooth" });
+	}, [messages]);
+
 	return (
 		<>
 			{currentChat && (
@@ -113,7 +118,7 @@ export default function Message({ currentUser, currentChat, socket }) {
 						</div>
 					</div>
 
-					<ScrollToBottom className="message-container">
+					<div className="message-container">
 						{messages.map((message) => {
 							return (
 								<div
@@ -121,6 +126,7 @@ export default function Message({ currentUser, currentChat, socket }) {
 										message.fromSelf ? "you" : "other"
 									}
 									key={uuidv4()}
+									ref={scrollRef}
 								>
 									{/* {console.log(message)} */}
 									<div className="message">
@@ -134,7 +140,7 @@ export default function Message({ currentUser, currentChat, socket }) {
 								</div>
 							);
 						})}
-					</ScrollToBottom>
+					</div>
 
 					<Input handleSendMsg={handleSendMsg} />
 				</div>
