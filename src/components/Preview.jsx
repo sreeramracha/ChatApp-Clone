@@ -1,9 +1,10 @@
+import React from "react";
 import ComputerIcon from "@mui/icons-material/Computer";
 
 export default function Preview() {
 	const styleForComputerIcon = {
-		height: "20vh",
-		width: "20vh",
+		height: "30vh",
+		width: "30vh",
 	};
 
 	return (

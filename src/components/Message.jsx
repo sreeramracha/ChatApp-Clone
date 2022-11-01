@@ -1,163 +1,144 @@
+import React, { useEffect, useState } from "react";
 import { Avatar, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import TagFacesIcon from "@mui/icons-material/TagFaces";
-import MicIcon from "@mui/icons-material/Mic";
-import SendIcon from "@mui/icons-material/Send";
-import { useState } from "react";
-import { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { getAllMessagesRoute, sendingMessageRoute } from "../utils/APIRoutes";
+import Input from "./Input";
+import { v4 as uuidv4 } from "uuid";
 
-export default function Message() {
-	const [message, setMessage] = useState("");
-	const [isSubmit, setSubmit] = useState(false);
-	const [user, setUser] = useState({});
-	const [sendingMessages, setSendingMessages] = useState([]);
+export default function Message({ currentUser, currentChat, socket }) {
+	const [messages, setMessages] = useState([]);
+	const [arrivalMessage, setArrivalMessage] = useState(null);
 
-	function changeSubmit() {
-		setSubmit(true);
-	}
-
-	function handleChange(event) {
-		const { value } = event.target;
-		changeSubmit();
-		setMessage(value);
-	}
-
-	function handleClick(event) {
-		setSubmit(false);
+	async function handleSendMsg(msg) {
 		const date = new Date().toString();
 		const hour = date.slice(16, 18);
 		const minute = date.slice(19, 21);
-		const conversation = {
-			username: user.username,
-			message: message,
-			hour: hour,
-			minute: minute,
-		};
-		if (conversation.message !== "") {
-			setSendingMessages((prevValue) => {
-				return [...prevValue, conversation];
-			});
-		}
-		setMessage("");
-		// event.preventDefault();
-		console.log(sendingMessages);
+		const time = [hour, minute];
+
+		await fetch(sendingMessageRoute, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				from: currentUser._id,
+				to: currentChat._id,
+				message: msg,
+				time: time,
+			}),
+		});
+
+		socket.current.emit("send-msg", {
+			to: currentChat._id,
+			from: currentUser._id,
+			message: msg,
+			time: time,
+		});
+
+		const msgs = [...messages];
+		msgs.push({ fromSelf: true, message: msg, time: time });
+		setMessages(msgs);
 	}
 
 	useEffect(() => {
-		async function fetchData() {
-			const res = await fetch("/chats", {
-				method: "GET",
-				headers: {
-					"Content-Type": "application/json",
-				},
+		if (socket.current) {
+			socket.current.on("msg-receive", (msg) => {
+				// console.log(msg);
+				setArrivalMessage({
+					fromSelf: false,
+					message: msg.message,
+					time: msg.time,
+				});
 			});
-
-			const data = await res.json();
-			setUser(data);
-			// console.log(data);
 		}
+	}, [socket]);
 
-		fetchData();
-	}, []);
+	useEffect(() => {
+		arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+	}, [arrivalMessage]);
+
+	useEffect(() => {
+		if (currentChat) {
+			async function fetchData() {
+				const response = await fetch(getAllMessagesRoute, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						from: currentUser._id,
+						to: currentChat._id,
+					}),
+				});
+
+				const content = await response.json();
+
+				setMessages(content);
+				// console.log(content);
+			}
+
+			fetchData();
+		}
+	}, [currentChat, currentUser]);
 
 	return (
-		<div className="message-section">
-			<div className="message-header">
-				<div className="message-profile-picture">
-					<Avatar src="https://pps.whatsapp.net/v/t61.24694-24/287597374_781422333021474_6975959552606426129_n.jpg?stp=dst-jpg_s96x96&ccb=11-4&oh=01_AdS1rjsym3ea3N4nu7OAGGcFoOwU2K_PvFUHRQkIy0Wf1A&oe=635E441E" />
-					<p>{user.username}</p>
-				</div>
+		<>
+			{currentChat && (
+				<div className="message-section">
+					<div className="message-header">
+						<div className="message-profile-picture">
+							<Avatar src={currentChat.avatarImageURL} />
 
-				<div className="find-menu">
-					<div className="icons-section">
-						<div className="icons">
-							<IconButton>
-								<SearchIcon />
-							</IconButton>
+							<p>{currentChat.username}</p>
 						</div>
-					</div>
 
-					<div className="icons-section">
-						<div className="icons">
-							<IconButton>
-								<MoreVertIcon />
-							</IconButton>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<ScrollToBottom className="message-container">
-				{sendingMessages.map((messageContent, index) => {
-					return (
-						<div
-							id={
-								user.username === messageContent.username
-									? "you"
-									: "other"
-							}
-							key={index}
-						>
-							<div className="message">
-								<div className="message-content">
-									<p>{messageContent.message}</p>
+						<div className="find-menu">
+							<div className="icons-section">
+								<div className="icons">
+									<IconButton>
+										<SearchIcon />
+									</IconButton>
 								</div>
-								<div className="timestamp">
-									{messageContent.hour}:
-									{messageContent.minute}{" "}
-									{Number(messageContent.hour) >= 12
-										? "PM"
-										: "AM"}
+							</div>
+
+							<div className="icons-section">
+								<div className="icons">
+									<IconButton>
+										<MoreVertIcon />
+									</IconButton>
 								</div>
 							</div>
 						</div>
-					);
-				})}
-			</ScrollToBottom>
+					</div>
 
-			<div className="message-form">
-				<div className="icons-section">
-					<div className="icons">
-						<IconButton>
-							<TagFacesIcon />
-						</IconButton>
-					</div>
+					<ScrollToBottom className="message-container">
+						{messages.map((message) => {
+							return (
+								<div
+									className={
+										message.fromSelf ? "you" : "other"
+									}
+									key={uuidv4()}
+								>
+									{/* {console.log(message)} */}
+									<div className="message">
+										<div className="message-content">
+											<p>{message.message}</p>
+										</div>
+										<div className="timestamp">
+											{message.time[0]}:{message.time[1]}
+										</div>
+									</div>
+								</div>
+							);
+						})}
+					</ScrollToBottom>
+
+					<Input handleSendMsg={handleSendMsg} />
 				</div>
-				<div className="sending-message">
-					<input
-						onChange={handleChange}
-						type="text"
-						placeholder="Type a message"
-						name="conversation"
-						value={message}
-						onKeyDown={(event) => {
-							event.key === "Enter" && handleClick(message);
-						}}
-					/>
-					<div className="icons-section">
-						{isSubmit ? (
-							<div
-								onClick={() => {
-									handleClick(message);
-								}}
-								className="icons"
-							>
-								<IconButton>
-									<SendIcon />
-								</IconButton>
-							</div>
-						) : (
-							<div className="icons">
-								<IconButton>
-									<MicIcon />
-								</IconButton>
-							</div>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 }

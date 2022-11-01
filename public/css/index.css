@@ -26,7 +26,7 @@ p {
 
 /* Scroll Bar */
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 7px;
 }
 
 ::-webkit-scrollbar-track {
@@ -61,6 +61,7 @@ p {
 	margin-bottom: 0;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 
 /* Chat Header Section */
@@ -76,42 +77,107 @@ p {
 	flex: 1;
 }
 
-.MuiAvatar-img {
+.MuiAvatar-img,
+.MuiSvgIcon-root {
 	cursor: pointer;
 }
 
-.insert-avatar {
+.inside-avatar {
 	position: absolute;
-	margin: 5px;
-	top: 65px;
+	/* margin: 5px; */
+	top: 0px;
 	left: 0;
 	transform: translateX(-110%);
 	z-index: 5;
-	padding: 5px 7px;
 	transition: transform 1.5s ease;
-	background-color: #222e35;
-	width: 370px;
+	background-color: #111b21;
+	width: 400px;
 	border-radius: 15px;
+	display: flex;
+	flex-direction: column;
+	height: 95%;
+}
+
+.slide-in {
+	transform: translateX(0);
+	transition: transform 0.5s ease;
+}
+
+.user-heading-section {
+	color: white;
+	height: 100px;
+	background-color: #222e35;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	font-size: x-large;
+	vertical-align: middle;
+}
+
+.user-heading {
+	display: flex;
+	align-items: center;
+}
+
+.MuiSvgIcon-root.user-heading-icon {
+	padding: 5px 15px;
+	color: white;
+}
+
+.user-heading-name {
+	padding: 15px 50px;
+}
+
+.user-name {
+	padding: 10px 25px;
+}
+
+.user-name > p:nth-child(1) {
+	color: #176b5b;
+}
+
+.user-name > p:nth-child(2) {
+	color: white;
+	padding: 10px;
+}
+
+.user-profile {
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+}
+
+.user-profile > img {
+	border-radius: 50%;
+}
+
+.insert-avatar {
+	padding: 10px;
+	display: flex;
+}
+
+.insert-avatar-name > p {
+	color: #176b5b;
+	padding: 20px 25px 0;
+}
+
+.insert-avatar > input {
+	outline-width: 0;
+	background-color: transparent;
+	border: 0;
+	padding: 7px 10px;
+	/* border-radius: 5px; */
+	color: #e9edef;
+	margin: auto 5px;
+	width: 80%;
+	font-size: medium;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.slide-in {
-	transform: translateX(0);
-	transition: transform 1.5s ease-in-out;
-}
-
-.insert-avatar > input {
-	outline-width: 0;
-	background-color: #111b21;
-	border: 0;
-	padding: 7px 10px;
-	border-radius: 5px;
-	color: #e9edef;
-	margin: auto 5px;
-	width: 80%;
-	font-size: medium;
+.insert-avatar > input:focus {
+	border-bottom: 3px #176b5b solid;
 }
 
 .insert-avatar > button {
@@ -137,13 +203,17 @@ p {
 	color: rgb(184, 184, 184);
 }
 
-.menu-list {
+/* .menu-list {
 	padding: 13px 30px;
-}
+} */
 
 .menu-list:hover {
 	background-color: #111b21;
 	cursor: pointer;
+}
+
+.menu-list > p {
+	padding: 13px 30px;
 }
 
 .menu-list > button {
@@ -152,6 +222,7 @@ p {
 	border: 0;
 	font-size: 17px;
 	cursor: pointer;
+	padding: 13px 30px;
 }
 
 .more {
@@ -245,6 +316,10 @@ p {
 	cursor: pointer;
 }
 
+.selected {
+	background-color: #222e35;
+}
+
 .chat-details {
 	flex: 1;
 }
@@ -298,6 +373,10 @@ p {
 	color: rgb(150, 150, 150);
 }
 
+.preview-info > p {
+	font-size: x-large;
+}
+
 /* Message Section */
 
 .message-section {
@@ -334,23 +413,23 @@ p {
 /* Message Content Section */
 
 .message-container {
-	overflow: scroll;
+	overflow: hidden;
 	overflow-x: hidden;
 	height: 100%;
 }
 
-#you {
+.you {
 	display: flex;
 	justify-content: flex-end;
 }
 
-#other {
+.other {
 	display: flex;
 	justify-content: flex-start;
 }
 
 /* received */
-#other .message {
+.other .message {
 	color: #e9edef;
 	background-color: #222e35;
 	/* width: -moz-fit-content;
@@ -365,7 +444,7 @@ p {
 }
 
 /* sent */
-#you .message {
+.you .message {
 	color: #e9edef;
 	background-color: #176b5b;
 	/* width: -moz-fit-content;
@@ -387,6 +466,34 @@ p {
 }
 
 /* Message Form Section */
+
+.emoji-picker {
+	position: relative;
+}
+
+.emoji-picker-options {
+	position: absolute;
+	top: -450px;
+}
+
+.EmojiPickerReact {
+	background-color: #080420;
+	border-color: #9a86f3;
+}
+
+.epr-body::-webkit-scrollbar {
+	background-color: #080420;
+	width: 7px;
+}
+
+.epr-emoji-category-label {
+	background-color: #080420;
+}
+
+.epr-search {
+	background-color: transparent;
+	border-color: #9a86f3;
+}
 
 .message-form {
 	display: flex;
@@ -515,14 +622,14 @@ p {
 p.lable-username,
 p.lable-password,
 p.lable-email,
-p.lable-cpassword {
+p.lable-confirmpassword {
 	padding: auto 25px;
 }
 
 .label-username,
 .label-email,
 .label-password,
-.label-cpassword {
+.label-confirmpassword {
 	position: absolute;
 	top: 7px;
 	left: 9px;
@@ -534,7 +641,7 @@ p.lable-cpassword {
 .lable-username,
 .lable-email,
 .lable-password,
-.lable-cpassword {
+.lable-confirmpassword {
 	position: absolute;
 	top: -10px;
 	left: 9px;
