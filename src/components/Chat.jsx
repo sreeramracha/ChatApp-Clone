@@ -75,6 +75,9 @@ export default function Chat({ currentUser, handlePreview }) {
 	function handleAvatarImageURL(event) {
 		const { value } = event.target;
 		setAvatarImage(value);
+		if (edit) {
+			setEdit(!edit);
+		}
 	}
 
 	async function handleAvatarImageSubmission(event) {
@@ -128,6 +131,7 @@ export default function Chat({ currentUser, handlePreview }) {
 		const { value } = event.target;
 		setContact(value);
 		// console.log(contact);
+		// handleSearchContacts();
 	}
 
 	function handleShowContact() {
