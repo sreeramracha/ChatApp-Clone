@@ -44,7 +44,7 @@ export default function Contacts({
 
 			fetchData();
 		}
-	}, [currentChat, currentUser, lastMessage]);
+	}, [currentChat, currentUser]);
 
 	function handleMessage(message) {
 		if (message.length > 45) {

@@ -182,6 +182,26 @@ export default function Chat({ currentUser, handlePreview }) {
 				username: currentUser.username,
 			}),
 		});
+
+		getFriends();
+	}
+
+	async function getFriends() {
+		if (currentUser) {
+			const res = await fetch(
+				`${getAllFriendsRoute}/${currentUser._id}`,
+				{
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			const contacts = await res.json();
+
+			// console.log(contacts);
+			setFriends(contacts);
+		}
 	}
 
 	useEffect(() => {
@@ -204,7 +224,7 @@ export default function Chat({ currentUser, handlePreview }) {
 		}
 
 		getFriends();
-	}, [currentUser, friends]);
+	}, [currentUser]);
 
 	return (
 		<div className="chat-section">
