@@ -95,10 +95,15 @@ module.exports.addFriend = async (req, res, next) => {
 
 		const user = await WhatsAppUser.findOne({ username });
 
-		user.friends.push(id);
-		await user.save();
+		const isFriendPresent = user.friends.some((item) => item._id == id);
 
-		return res.json({ msg: "Friend added successfully" });
+		if (isFriendPresent) {
+			return res.json({ msg: "Friend is already added successfully" });
+		} else {
+			user.friends.push(id);
+			await user.save();
+			return res.json({ msg: "Friend added successfully" });
+		}
 	} catch (error) {
 		next(error);
 	}
